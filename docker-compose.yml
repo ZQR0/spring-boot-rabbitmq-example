@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq:3-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - 15672:15672
+    restart: on-failure
+  consumer:
+    container_name: rmq-consumer
+    build:
+      context: .
+    image: rmq-consumer:latest
+    restart: on-failure
+    ports:
+      - 8081:8081
+  producer:
+    container_name: rmq-producer
+    build:
+      context: .
+    image: rmq-producer:latest
+    restart: on-failure
+    ports:
+      - 3031:3031
